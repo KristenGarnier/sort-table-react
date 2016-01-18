@@ -20,14 +20,24 @@ class Table extends Component {
     }
 
     render() {
-        return <div>
-            <input placeholder="Username" type="text" data-type='user.username'
-                   value={this.state.filter.type === 'user.username' ? this.state.filter.value : ''}
-                   onChange={this._handleChange}/>
-            <input placeholder="jour-mois-année" type="date" data-type='date'
-                   value={this.state.filter.type === 'date' ? this.state.filter.value : ''}
-                   onChange={this._handleChange}/>
-            <table>
+        return <div className="container">
+            <div className="form-group">
+                <div className="row">
+                    <div className="col-md-6">
+                        <input className="form-control" placeholder="Username" type="text" data-type='user.username'
+                               value={this.state.filter.type === 'user.username' ? this.state.filter.value : ''}
+                               onChange={this._handleChange}/>
+                    </div>
+                    <div className="col-md-6">
+                        <input className="form-control" placeholder="jour-mois-année" type="date" data-type='date'
+                               value={this.state.filter.type === 'date' ? this.state.filter.value : ''}
+                               onChange={this._handleChange}/>
+                    </div>
+                </div>
+            </div>
+
+
+            <table className="table table-striped tablesorter">
                 <thead>
                 <tr>
                     <th onClick={() => this._handleSort('user')}>Nom d'utilisateur</th>
