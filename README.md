@@ -1,6 +1,6 @@
 # sortTable
 
-Collaborating on this React app:
+A little react example app to sort table by field and by clicking a table header
 
 ## Prerequisites
 
