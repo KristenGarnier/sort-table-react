@@ -10,11 +10,11 @@
     "test": "nwb test"
   },
   "dependencies": {
-    "lodash": "3.10.1",
+    "lodash": "^3.10.1",
     "moment": "^2.11.1",
     "ramda": "^0.19.1",
     "react": "0.14.x",
-    "react-dom": "0.14.x"
+    "react-dom": "^0.14.6"
   },
   "devDependencies": {
     "nwb": "0.7.x"

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import _ from 'lodash';
+import {get, partial, sortByOrder}  from 'lodash';
 
 class Table extends Component {
     constructor() {
@@ -74,15 +74,15 @@ class Table extends Component {
         } else {
 
             return commands.filter(item => {
-                    if (_.get(item, filter.type) === undefined) {
+                    if (get(item, filter.type) === undefined) {
                         return item;
                     }
 
                     if (filter.type === 'date') {
-                        return moment(String(_.get(item, filter.type))).isSame(filter.value, 'day');
+                        return moment(String(get(item, filter.type))).isSame(filter.value, 'day');
                     }
 
-                    return String(_.get(item, filter.type)).includes(filterTrim);
+                    return String(get(item, filter.type)).includes(filterTrim);
                 })
                 .map((item, i) => {
                     return <tr key={i}>
@@ -97,7 +97,7 @@ class Table extends Component {
     _handleSort(action) {
         const commands = this.state.commands;
         const oldState = this.state.oldState;
-        const sort = _.partial(this.sortApply, commands);
+        const sort = partial(this.sortApply, commands);
 
         switch (action) {
             case 'user':
@@ -117,13 +117,13 @@ class Table extends Component {
 
     sortApply(collection, filter) {
         if (filter !== 'stls') {
-            if (collection[0].id === _.sortByOrder(collection, [filter], ['asc'])[0].id) {
+            if (collection[0].id === sortByOrder(collection, [filter], ['asc'])[0].id) {
                 this.setState({
-                    commands: _.sortByOrder(collection, [filter], ['desc'])
+                    commands: sortByOrder(collection, [filter], ['desc'])
                 });
             } else {
                 this.setState({
-                    commands: _.sortByOrder(collection, [filter], ['asc'])
+                    commands: sortByOrder(collection, [filter], ['asc'])
                 });
             }
 
