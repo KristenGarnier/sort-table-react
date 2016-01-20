@@ -36,7 +36,7 @@ class Table extends Component {
             </div>
 
 
-            <table className="table table-striped tablesorter">
+            <table className="table table-striped">
                 <thead>
                 <tr>
                     <th onClick={() => this._handleSort('user')}>Nom d'utilisateur</th>
