@@ -75,7 +75,7 @@ class Table extends Component {
                         return moment(String(getProp(item, filter.type))).isSame(filter.value, 'day');
                     }
 
-                    return String(getProp(item, filter.type)).includes(filterTrim);
+                    return String(getProp(item, filter.type)).toLowerCase().includes(filterTrim.toLowerCase());
                 })
                 .map(renderRows);
         }
