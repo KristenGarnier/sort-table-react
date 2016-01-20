@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import {get, partial, sortByOrder}  from 'lodash';
+import {get as getProp, partial, sortByOrder}  from 'lodash';
 
 class Table extends Component {
     constructor() {
@@ -74,15 +74,15 @@ class Table extends Component {
         } else {
 
             return commands.filter(item => {
-                    if (get(item, filter.type) === undefined) {
+                    if (getProp(item, filter.type) === undefined) {
                         return item;
                     }
 
                     if (filter.type === 'date') {
-                        return moment(String(get(item, filter.type))).isSame(filter.value, 'day');
+                        return moment(String(getProp(item, filter.type))).isSame(filter.value, 'day');
                     }
 
-                    return String(get(item, filter.type)).includes(filterTrim);
+                    return String(getProp(item, filter.type)).includes(filterTrim);
                 })
                 .map((item, i) => {
                     return <tr key={i}>
