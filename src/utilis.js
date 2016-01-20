@@ -8,3 +8,15 @@ export function renderRows(item, i) {
                      productNb={item.stls.length}
     />
 }
+
+export function usernameToLowerCase(collection){
+    return collection.map(item => {
+        return {
+            ...item,
+            user:{
+                ...item.user,
+                username: item.user.username.toLowerCase()
+            }
+        }
+    });
+}
