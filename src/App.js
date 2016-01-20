@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import {get as getProp, partial, sortByOrder}  from 'lodash';
+import Input from './input';
+import {renderRows} from './utilis';
 
 class Table extends Component {
     constructor() {
@@ -23,16 +25,13 @@ class Table extends Component {
         return <div className="container">
             <div className="form-group">
                 <div className="row">
-                    <div className="col-md-6">
-                        <input className="form-control" placeholder="Username" type="text" data-type='user.username'
-                               value={this.state.filter.type === 'user.username' ? this.state.filter.value : ''}
-                               onChange={this._handleChange}/>
-                    </div>
-                    <div className="col-md-6">
-                        <input className="form-control" placeholder="jour-mois-année" type="date" data-type='date'
-                               value={this.state.filter.type === 'date' ? this.state.filter.value : ''}
-                               onChange={this._handleChange}/>
-                    </div>
+                    <Input placeholder="Username" type="text" Dt='user.username'
+                           value={this.state.filter.type === 'user.username' ? this.state.filter.value : ''}
+                           change={this._handleChange} label="Filtrer par nom d'utilisateur"/>
+
+                    <Input placeholder="jour-mois-année" type="date" Dt='date'
+                           value={this.state.filter.type === 'date' ? this.state.filter.value : ''}
+                           change={this._handleChange} label="Filtrer par date"/>
                 </div>
             </div>
 
@@ -64,13 +63,7 @@ class Table extends Component {
     _renderTrs(filter, commands) {
         const filterTrim = filter.value.trim();
         if (filterTrim === '') {
-            return commands.map((item, i) => {
-                return <tr key={i}>
-                    <td>{item.user.username}</td>
-                    <td>{moment(item.date).format('d / MM / Y')}</td>
-                    <td>{item.stls.length}</td>
-                </tr>
-            });
+            return commands.map(renderRows);
         } else {
 
             return commands.filter(item => {
@@ -84,19 +77,12 @@ class Table extends Component {
 
                     return String(getProp(item, filter.type)).includes(filterTrim);
                 })
-                .map((item, i) => {
-                    return <tr key={i}>
-                        <td>{item.user.username}</td>
-                        <td>{moment(item.date).format('D / MM / Y')}</td>
-                        <td>{item.stls.length}</td>
-                    </tr>
-                });
+                .map(renderRows);
         }
     }
 
     _handleSort(action) {
         const commands = this.state.commands;
-        const oldState = this.state.oldState;
         const sort = partial(this.sortApply, commands);
 
         switch (action) {
@@ -131,14 +117,12 @@ class Table extends Component {
             let change = collection;
             if (collection[0].stls.length > collection[collection.length - 1].stls.length) {
                 this.setState({
-                    oldState: collection,
                     commands: change.sort((a, b) => {
                         return a.stls.length - b.stls.length
                     })
                 });
             } else {
                 this.setState({
-                    oldState: collection,
                     commands: change.sort((a, b) => {
                         return b.stls.length - a.stls.length
                     })
