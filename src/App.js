@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import {get as getProp, partial, sortByOrder}  from 'lodash';
 import Input from './input';
-import {renderRows, usernameToLowerCase} from './utilis';
+import {renderRows, usernameToLowerCase, usernameCapitalize} from './utilis';
 
 class Table extends Component {
     constructor() {
@@ -13,7 +13,7 @@ class Table extends Component {
         this.sortApply = this.sortApply.bind(this);
 
         this.state = {
-            commands: window.doc,
+            commands: usernameCapitalize(window.doc),
             filter: {
                 type: '',
                 value: ''
@@ -101,10 +101,7 @@ class Table extends Component {
         }
     }
 
-    sortApply(initial, filter) {
-        console.log(initial);
-        const collection = usernameToLowerCase(initial);
-        console.log(collection);
+    sortApply(collection, filter) {
         if (filter !== 'stls') {
             if (collection[0].id === sortByOrder(collection, [filter], ['asc'])[0].id) {
                 this.setState({
